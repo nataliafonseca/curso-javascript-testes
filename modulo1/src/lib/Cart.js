@@ -1,4 +1,9 @@
+import Money from 'dinero.js';
 import { find, remove } from 'lodash';
+import { calculateDiscount } from './discount.utils';
+
+Money.defaultCurrency = 'BRL';
+Money.defaultPrecision = 2;
 
 export class Cart {
   items = [];
@@ -14,25 +19,32 @@ export class Cart {
   }
 
   remove(product) {
-    if (find(this.items, { product })) {
-      remove(this.items, { product });
-    }
+    remove(this.items, { product });
   }
 
   getTotal() {
-    return this.items.reduce(
-      (total, item) => total + item.product.price * item.quantity,
-      0,
-    );
+    return this.items.reduce((total, { quantity, product, condition }) => {
+      const amount = Money({ amount: product.price * quantity });
+      let discount = Money({ amount: 0 });
+
+      if (condition) {
+        discount = calculateDiscount(amount, quantity, condition);
+      }
+
+      return total.add(amount).subtract(discount);
+    }, Money({ amount: 0 }));
   }
 
   summary() {
-    {
-      return {
-        total: this.getTotal(),
-        items: this.items,
-      };
-    }
+    const total = this.getTotal();
+    const formatted = total.setLocale('pt-br').toFormat();
+    const items = this.items;
+
+    return {
+      total,
+      formatted,
+      items,
+    };
   }
 
   checkout() {
@@ -41,7 +53,7 @@ export class Cart {
     this.items = [];
 
     return {
-      total,
+      total: total.getAmount(),
       items,
     };
   }
