@@ -6,7 +6,11 @@
       <div
         class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
       >
-        <product-card v-for="product in products" :key="product.id" />
+        <product-card
+          v-for="product in products"
+          :key="product.id"
+          :product="product"
+        />
       </div>
     </div>
   </main>
@@ -14,13 +18,14 @@
 
 <script>
 import ProductCard from '@/components/ProductCard';
-import products from '@/mocks/products.json';
+
 export default {
   components: { ProductCard },
-  computed: {
-    products() {
-      return products;
-    },
+  data() {
+    return { products: [] };
+  },
+  async created() {
+    this.products = (await this.$axios.get('/api/products')).data.products;
   },
 };
 </script>
