@@ -9,13 +9,12 @@ import { Factory } from 'miragejs';
 import { faker } from '@faker-js/faker';
 
 export default {
-  message: Factory.extend({
-    content() {
-      return faker.fake('{{lorem.paragraph}}');
+  product: Factory.extend({
+    title() {
+      return faker.fake('{{lorem.words}}');
     },
-    date() {
-      const date = new Date(faker.fake('{{date.past}}'));
-      return date.toLocaleDateString();
+    price() {
+      return faker.fake('{{commerce.price}}');
     },
   }),
 };

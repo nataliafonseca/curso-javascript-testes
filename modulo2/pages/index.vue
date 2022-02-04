@@ -1,6 +1,6 @@
 <template>
   <main class="my-8">
-    <div class="container px-6 mx-auto">
+    <div v-if="errorMessage === ''" class="container px-6 mx-auto">
       <h3 class="text-2xl font-medium text-gray-700">Wrist Watch</h3>
       <span class="mt-3 text-sm text-gray-500">200+ Products</span>
       <div
@@ -13,6 +13,7 @@
         />
       </div>
     </div>
+    <h3 v-else class="text-2xl text-center">{{ errorMessage }}</h3>
   </main>
 </template>
 
@@ -22,11 +23,14 @@ import ProductCard from '@/components/ProductCard';
 export default {
   components: { ProductCard },
   data() {
-    return { products: [] };
+    return { products: [], errorMessage: '' };
   },
   async created() {
-    this.products = (await this.$axios.get('/api/products')).data.products;
-    await this.$axios.get('/api/users');
+    try {
+      this.products = (await this.$axios.get('/api/products')).data.products;
+    } catch (error) {
+      this.errorMessage = 'Problema ao carregar a lista de produtos.';
+    }
   },
 };
 </script>
