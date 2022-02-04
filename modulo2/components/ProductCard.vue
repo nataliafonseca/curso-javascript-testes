@@ -2,7 +2,7 @@
   <div class="w-full max-w-sm mx-auto overflow-hidden rounded-md shadow-md">
     <div
       class="flex items-end justify-end w-full h-56 bg-cover"
-      :style="`background-image: url('https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80');`"
+      :style="`background-image: url('${product.image}');`"
     >
       <button
         class="p-2 mx-5 -mb-4 text-white bg-blue-600 rounded-full hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
