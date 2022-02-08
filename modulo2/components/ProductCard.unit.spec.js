@@ -38,6 +38,14 @@ describe('Product Card', () => {
     expect(wrapper.text()).toContain('$22.00');
   });
 
+  it('should mount the component with default values', () => {
+    const wrapper = mount(ProductCard);
+
+    expect(wrapper.vm).toBeDefined();
+    expect(wrapper.text()).toContain('Título');
+    expect(wrapper.text()).toContain('$12.33');
+  });
+
   it('should match snapshot', () => {
     const { wrapper } = mountProductCard();
     expect(wrapper.element).toMatchSnapshot();
