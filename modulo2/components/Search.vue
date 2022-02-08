@@ -1,5 +1,5 @@
 <template>
-  <form class="relative max-w-lg mx-auto mt-6">
+  <form class="relative max-w-lg mx-auto mt-6" @submit.prevent="doSearch">
     <span class="absolute inset-y-0 left-0 flex items-center pl-3">
       <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none">
         <path
@@ -13,9 +13,33 @@
     </span>
 
     <input
+      v-model="term"
       class="w-full py-2 pl-10 pr-4 border rounded-md focus:border-blue-500 focus:outline-none focus:shadow-outline"
       type="search"
       placeholder="Search"
     />
   </form>
 </template>
+
+<script>
+export default {
+  name: 'Search',
+  data() {
+    return {
+      term: '',
+    };
+  },
+  watch: {
+    term() {
+      if (this.term === '') {
+        this.doSearch();
+      }
+    },
+  },
+  methods: {
+    doSearch() {
+      this.$emit('doSearch', { term: this.term });
+    },
+  },
+};
+</script>
