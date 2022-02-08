@@ -6,6 +6,7 @@
     >
       <button
         class="p-2 mx-5 -mb-4 text-white bg-blue-600 rounded-full hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
+        @click="addToCart"
       >
         <svg
           class="w-5 h-5"
@@ -43,6 +44,11 @@ export default {
           price: '12.33',
         };
       },
+    },
+  },
+  methods: {
+    addToCart() {
+      this.$emit('addToCart', { product: this.product });
     },
   },
 };
