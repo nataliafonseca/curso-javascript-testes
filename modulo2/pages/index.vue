@@ -1,5 +1,6 @@
 <template>
   <main class="my-8">
+    <search />
     <div v-if="errorMessage === ''" class="container px-6 mx-auto">
       <h3 class="text-2xl font-medium text-gray-700">Wrist Watch</h3>
       <span class="mt-3 text-sm text-gray-500">200+ Products</span>
@@ -19,9 +20,10 @@
 
 <script>
 import ProductCard from '@/components/ProductCard';
+import Search from '@/components/Search';
 
 export default {
-  components: { ProductCard },
+  components: { ProductCard, Search },
   data() {
     return { products: [], errorMessage: '' };
   },
