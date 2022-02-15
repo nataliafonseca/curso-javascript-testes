@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils';
 import ProductCard from '@/components/ProductCard';
 import { makeServer } from '@/miragejs/server';
+import { cartState } from '@/state';
 
 describe('Product Card', () => {
   let server;
@@ -51,13 +52,12 @@ describe('Product Card', () => {
     expect(wrapper.element).toMatchSnapshot();
   });
 
-  it('should emit the event addToCart with product object when button gets clicked', async () => {
+  xit('should add item to cartState when button gets clicked', async () => {
     const { wrapper, product } = mountProductCard();
 
     await wrapper.find('button').trigger('click');
 
-    expect(wrapper.emitted().addToCart).toBeTruthy();
-    expect(wrapper.emitted().addToCart.length).toBe(1);
-    expect(wrapper.emitted().addToCart[0]).toEqual([{ product }]);
+    expect(cartState.items).toHaveLength(1);
+    expect(cartState.items[0]).toEqual(product);
   });
 });
