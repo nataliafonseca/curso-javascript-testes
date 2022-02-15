@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import ProductCard from '@/components/ProductCard';
 import { makeServer } from '@/miragejs/server';
-import { cartState } from '@/state';
+import { CartManager } from '@/managers/CartManager';
 
 describe('Product Card', () => {
   let server;
@@ -13,13 +13,22 @@ describe('Product Card', () => {
       image:
         'https://images.unsplash.com/photo-1532667449560-72a95c8d381b?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80',
     });
+
+    const cartManager = new CartManager();
+
+    const wrapper = mount(ProductCard, {
+      propsData: {
+        product,
+      },
+      mocks: {
+        $cart: cartManager,
+      },
+    });
+
     return {
-      wrapper: mount(ProductCard, {
-        propsData: {
-          product,
-        },
-      }),
+      wrapper,
       product,
+      cartManager,
     };
   };
 
@@ -52,12 +61,15 @@ describe('Product Card', () => {
     expect(wrapper.element).toMatchSnapshot();
   });
 
-  xit('should add item to cartState when button gets clicked', async () => {
-    const { wrapper, product } = mountProductCard();
+  it('should add item to cart when button gets clicked', async () => {
+    const { wrapper, product, cartManager } = mountProductCard();
+    const spy1 = jest.spyOn(cartManager, 'open');
+    const spy2 = jest.spyOn(cartManager, 'addProduct');
 
     await wrapper.find('button').trigger('click');
 
-    expect(cartState.items).toHaveLength(1);
-    expect(cartState.items[0]).toEqual(product);
+    expect(spy1).toHaveBeenCalledTimes(1);
+    expect(spy2).toHaveBeenCalledTimes(1);
+    expect(spy2).toHaveBeenCalledWith(product);
   });
 });

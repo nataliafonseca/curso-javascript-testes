@@ -32,6 +32,7 @@
           </div>
           <div class="flex items-center justify-end w-full">
             <button
+              data-testid="toggle-button"
               class="mx-4 text-gray-600 focus:outline-none sm:mx-0"
               @click="toggleCart"
             >
