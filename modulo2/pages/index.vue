@@ -3,7 +3,12 @@
     <search @doSearch="setSearchTerm" />
     <div v-if="errorMessage === ''" class="container px-6 mx-auto">
       <h3 class="text-2xl font-medium text-gray-700">Wrist Watch</h3>
-      <span class="mt-3 text-sm text-gray-500">200+ Products</span>
+      <span
+        data-testid="total-quantity-label"
+        class="mt-3 text-sm text-gray-500"
+      >
+        {{ quantityLabel }}</span
+      >
       <div
         class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
       >
@@ -35,6 +40,12 @@ export default {
         );
       }
       return this.products;
+    },
+    quantityLabel() {
+      const {
+        list: { length },
+      } = this;
+      return length === 1 ? `${length} Product` : `${length} Products`;
     },
   },
   async created() {
