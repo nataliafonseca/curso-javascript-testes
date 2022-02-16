@@ -1,5 +1,9 @@
 <template>
-  <form class="relative max-w-lg mx-auto mt-6" @submit.prevent="doSearch">
+  <form
+    data-testid="search-form"
+    class="relative max-w-lg mx-auto mt-6"
+    @submit.prevent="doSearch"
+  >
     <span class="absolute inset-y-0 left-0 flex items-center pl-3">
       <svg class="w-5 h-5 text-gray-500" viewBox="0 0 24 24" fill="none">
         <path

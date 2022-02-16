@@ -1,11 +1,16 @@
 <template>
   <div
+    data-testid="shopping-cart"
     class="fixed top-0 right-0 w-full h-full max-w-xs px-6 py-4 overflow-y-auto transition duration-300 transform bg-white border-l-2 border-gray-300"
     :class="{ hidden: !isOpen }"
   >
     <div class="flex items-center justify-between">
       <h3 class="text-2xl font-medium text-gray-700">Your cart</h3>
-      <button data-testid="clear-cart-button" @click="$cart.clearProducts()">
+      <button
+        v-if="hasProducts"
+        data-testid="clear-cart-button"
+        @click="$cart.clearProducts()"
+      >
         clear cart
       </button>
       <button
@@ -31,6 +36,7 @@
       v-for="product in products"
       :key="product.id"
       :product="product"
+      data-testid="cart-item"
     />
     <h3 v-if="!hasProducts">Cart is empty</h3>
     <a

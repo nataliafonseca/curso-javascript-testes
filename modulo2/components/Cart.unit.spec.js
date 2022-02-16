@@ -38,6 +38,18 @@ describe('Cart', () => {
     expect(wrapper.vm).toBeDefined();
   });
 
+  it('should mount cart even if no products are passed', () => {
+    const { cartManager } = mountCart();
+
+    const wrapper = mount(Cart, {
+      mocks: {
+        $cart: cartManager,
+      },
+    });
+
+    expect(wrapper.vm).toBeDefined();
+  });
+
   it('should emit close event when close button is clicked', async () => {
     const { wrapper } = mountCart();
     const button = wrapper.find('[data-testid="close-button"]');
@@ -82,6 +94,17 @@ describe('Cart', () => {
     const button = wrapper.find('[data-testid="clear-cart-button"]');
 
     expect(button.exists()).toBe(true);
+  });
+
+  it('should not display empty cart button when there are no products', async () => {
+    const { wrapper } = mountCart();
+    await wrapper.setProps({
+      products: [],
+    });
+
+    const button = wrapper.find('[data-testid="clear-cart-button"]');
+
+    expect(button.exists()).toBe(false);
   });
 
   it('should call cart manager clearProducts() when button gets clicked', async () => {
