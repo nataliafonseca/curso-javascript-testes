@@ -1,20 +1,17 @@
-export default function ProductCard({ product, addToCart }) {
+export default function ProductCard() {
   return (
-    <section data-testid="product-card">
-      <div className="w-full max-w-sm mx-auto overflow-hidden rounded-md shadow-md">
+    <section>
+      <div className="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
         <div
-          data-testid="image"
-          className="flex items-end justify-end w-full h-56 bg-cover"
+          className="flex items-end justify-end h-56 w-full bg-cover"
           style={{
-            backgroundImage: `url(${product.image})`,
+            backgroundImage:
+              'url(https://images.unsplash.com/photo-1495856458515-0637185db551?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80)',
           }}
         >
-          <button
-            onClick={() => addToCart(product)}
-            className="p-2 mx-5 -mb-4 text-white bg-blue-600 rounded-full hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
-          >
+          <button className="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
             <svg
-              className="w-5 h-5"
+              className="h-5 w-5"
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -27,8 +24,8 @@ export default function ProductCard({ product, addToCart }) {
           </button>
         </div>
         <div className="px-5 py-3">
-          <h3 className="text-gray-700 uppercase">{product.title}</h3>
-          <span className="mt-2 text-gray-500">${product.price}</span>
+          <h3 className="text-gray-700 uppercase">Classic watch</h3>
+          <span className="text-gray-500 mt-2">$123</span>
         </div>
       </div>
     </section>
